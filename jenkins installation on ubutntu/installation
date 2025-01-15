@@ -1,0 +1,23 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Step 1: Verify Jenkins Home Directory : sudo systemctl status jenkins | grep 'JENKINS_HOME'
+Step 2: Check Permissions :  chmod +x s3upload.sh
+                             sudo chmod -R 750 /var/lib/jenkins
+Step 3: Debug the Script :  set -x
+
+ 
