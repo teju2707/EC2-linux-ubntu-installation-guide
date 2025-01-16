@@ -1,0 +1,22 @@
+Step 1: Update Package List :   sudo apt update
+                                sudo apt upgrade -y
+
+Step 2: Check Python Version : python3 --version
+
+Step 3: Install Python  :  sudo apt install python3 -y
+    Install additional packages for development: sudo apt install python3-pip python3-dev -y
+
+Step 4: Set Default Python Version (Optional) : sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+                                                sudo update-alternatives --config python
+
+Step 5: Verify Installation : python3 --version
+                              pip3 --version
+
+
+##############################################################
+Replace 3.x with the desired Python version (e.g., 3.11).
+
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt update
+sudo apt install python3.x -y
+#######################################################
