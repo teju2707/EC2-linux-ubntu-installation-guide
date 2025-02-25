@@ -1,12 +1,43 @@
-Step 1: Update the System : sudo apt update && sudo apt upgrade -y 
+Step 1: Update Your Package List**
+```bash
+sudo apt update
+```
 
-INSTALL AWS-CLI
+### **Step 2: Install Required Dependencies**
+```bash
+sudo apt install curl unzip -y
+```
 
-Step 2: Install Prerequisites : sudo apt install curl unzip -y
-Step 3: Download the AWS CLI Installer :  
+### **Step 3: Download the AWS CLI Installer**
+```bash
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-Step 4: Extract the Installer :  unzip awscliv2.zip  
+```
+
+### **Step 4: Unzip the Installer**
+```bash
+unzip awscliv2.zip
+```
+
+### **Step 5: Run the Installer**
+```bash
+sudo ./aws/install
+```
+
+### **Step 6: Verify the Installation**
+```bash
+aws --version
+```
+Expected output:
+```
+aws-cli/2.x.x Python/3.x.x Linux/x86_64
+```
+
+### **Step 7: Clean Up the Installation Files (Optional)**
+```bash
 rm -rf awscliv2.zip aws
-Step 5: Run the Installer : sudo ./aws/install
-Step 6: Verify the Installation : aws --version
-Step 7: (Optional) Configure AWS CLI : aws configure
+```
+
+Now, your AWS CLI is installed and ready to use. You can configure it using:
+```bash
+aws configure
+```
