@@ -1,0 +1,68 @@
+sudo apt update && sudo apt upgrade -y
+sudo apt install openjdk-17-jdk -y
+java -version
+sudo apt install postgresql postgresql-contrib -y
+sudo systemctl start postgresql
+sudo systemctl enable postgresql
+sudo -i -u postgres
+
+------------------
+createuser sonar
+psql -c "ALTER USER sonar WITH ENCRYPTED PASSWORD 'sonar';"
+createdb -O sonar sonarqube
+exit
+-------------------------
+wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-10.5.1.90531.zip
+
+sudo apt install unzip -y
+unzip sonarqube-10.5.1.90531.zip 
+sudo mv sonarqube-10.5.1.90531 /opt/sonarqube
+sudo groupadd sonar
+sudo useradd -d /opt/sonarqube -g sonar sonar
+sudo chown -R sonar:sonar /opt/sonarqube
+
+sudo mkdir -p /opt/sonarqube/logs
+sudo chown -R sonar:sonar /opt/sonarqube/logs
+
+-------------------------
+sudo nano /opt/sonarqube/conf/sonar.properties
+
+
+sonar.jdbc.username=sonar
+sonar.jdbc.password=sonar
+sonar.jdbc.url=jdbc:postgresql://localhost/sonarqube
+sonar.path.logs=/opt/sonarqube/logs   
+------------------------------------------
+
+------------------------------------
+sudo nano /etc/systemd/system/sonarqube.service
+
+[Unit]
+Description=SonarQube service
+After=syslog.target network.target
+
+[Service]
+Type=forking
+ExecStart=/opt/sonarqube/bin/linux-x86-64/sonar.sh start
+ExecStop=/opt/sonarqube/bin/linux-x86-64/sonar.sh stop
+User=sonar
+Group=sonar
+Restart=always
+LimitNOFILE=65536
+LimitNPROC=4096
+LimitAS=infinity
+LimitFSIZE=infinity
+PIDFile=/opt/sonarqube/temp/sonar.pid
+
+[Install]
+WantedBy=multi-user.target
+-------------------------------
+
+sudo systemd-analyze verify /etc/systemd/system/sonarqube.service
+sudo adduser --system --no-create-home --group sonar
+sudo chown -R sonar:sonar /opt/sonarqube
+sudo chown -R sonar:sonar /opt/sonarqube
+sudo chmod -R 755 /opt/sonarqube
+sudo systemctl daemon-reload
+sudo systemctl start sonarqube
+sudo systemctl enable sonarqube
